@@ -33,7 +33,7 @@ public class ProductoController {
         return "producto-list";
     }
 
-    //Comentario de prueba
+    //Comentario de prueba2
 
     @GetMapping("/productos/add")
     public String add(){

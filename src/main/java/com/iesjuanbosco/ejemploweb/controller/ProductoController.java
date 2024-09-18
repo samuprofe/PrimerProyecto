@@ -33,6 +33,8 @@ public class ProductoController {
         return "producto-list";
     }
 
+    //Comentario de prueba
+
     @GetMapping("/productos/add")
     public String add(){
         List<Producto> productos = new ArrayList<Producto>();

@@ -5,6 +5,7 @@ import com.iesjuanbosco.ejemploweb.repository.ProductoRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.thymeleaf.model.IModel;
 
 import java.util.ArrayList;
@@ -19,6 +20,19 @@ public class ProductoController {
 
     public ProductoController(ProductoRepository repository){
         this.productoRepository = repository;
+    }
+
+    @GetMapping("/productos2")    //Anotación que indica la URL localhost:8080/productos2 mediante GET
+    @ResponseBody       //Anotación que indica que no pase por el motor de plantillas thymeleaf sino que voy a devolver yo el HTML diréctamente
+    public String index(){
+        List<Producto> productos = this.productoRepository.findAll();
+        StringBuilder HTML = new StringBuilder("<html><body>");
+        productos.forEach(producto -> {
+            HTML.append("<p>" + producto.getTitulo() + "</p>");
+        });
+        HTML.append("</body></html>");
+
+        return HTML.toString();
     }
 
     /* Con la anotación GetMapping le indicamos a Spring que el siguiente método

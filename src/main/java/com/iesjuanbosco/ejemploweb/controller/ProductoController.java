@@ -4,10 +4,7 @@ import com.iesjuanbosco.ejemploweb.entity.Producto;
 import com.iesjuanbosco.ejemploweb.repository.ProductoRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.thymeleaf.model.IModel;
 
 import java.util.ArrayList;
@@ -82,7 +79,7 @@ public class ProductoController {
     @GetMapping("/productos/view/{id}")
     public String view(@PathVariable Long id, Model model){
         //Obtenemos el producto de la BD a partir del id de la barra de direcciones
-        Optional producto = productoRepository.findById(id);
+        Optional<Producto> producto = productoRepository.findById(id);
         if(producto.isPresent()){
             //Mandamos el producto a la vista
             model.addAttribute("producto",producto.get());
@@ -94,14 +91,15 @@ public class ProductoController {
     }
 
     @GetMapping("/productos/new")
-    public String newProducto(){
+    public String newProducto(Model model){
+        model.addAttribute("producto", new Producto());
         return "producto-new";
     }
 
     @PostMapping("/productos/new")
-    public String newProductoInsert(){
+    public String newProductoInsert(Producto producto){
         //Insertamos los datos en la BD
-
+        productoRepository.save(producto);
         //Redirigimos a /productos
         return "redirect:/productos";
     }

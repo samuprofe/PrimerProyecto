@@ -6,11 +6,22 @@
 </head>
 <body>
     <div id="productos">
-        <div th:each="producto: $(productos)">
-            <h2 th:text="${producto.titulo}"> Titulo </h2>
-            Precio: <span th:text="${producto.precio}"></span>
-            Cantidad <span th:text="${producto.cantidad}"></span>
-        </div>
+        <p th:if="${#lists.isEmpty(productos)}">No hay productos.</p>
+        <ul>
+            <li th:each="producto: ${productos}">
+                <a th:href="@{/productos/view/{id}(id=${producto.id})}"
+                   th:text="${producto.titulo}"></a>
+                <a th:href="@{/productos/del/{id}(id=${producto.id})}">borrar</a>
+                <!--Queremos cargar una ruta del tipo: /productos/del/3 -->
+                <a th:href="@{/productos/edit/{id}(id=${producto.id})}">editar</a>
+            </li>
+        </ul>
     </div>
+    <a th:href="@{/productos/new}">Insertar producto</a>
+    <br><br><br>
+    <a href="productos/add">Cargar productos de prueba (enlace relativo)</a><br>
+    <a href="/productos/add">Cargar productos de prueba (enlace absoluto)</a><br>
+    <a th:href="@{/productos/add}" >Cargar productos de prueba (enlace dinámico con Thymeleaf)</a>
+
 </body>
 </html>

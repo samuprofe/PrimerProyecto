@@ -5,11 +5,14 @@ import com.iesjuanbosco.ejemploweb.repository.ProductoRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.thymeleaf.model.IModel;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 //Para que Spring sepa que esta clase es un controlador tenemos que añadir la anotación @Controller antes de la clase
 @Controller
@@ -64,8 +67,43 @@ public class ProductoController {
 
         //Redirige al controlador /productos
         return "redirect:/productos";
-
     }
 
+    //Borra un producto a partir del id de la ruta
+    @GetMapping("/productos/del/{id}")
+    public String delete(@PathVariable Long id){
+        //Borrar el producto usando el repositorio
+        productoRepository.deleteById(id);
+        //Redirigir al listado de productos: /productos
+        return "redirect:/productos";
+    }
+
+    //Muestra un producto a partir del id de la ruta
+    @GetMapping("/productos/view/{id}")
+    public String view(@PathVariable Long id, Model model){
+        //Obtenemos el producto de la BD a partir del id de la barra de direcciones
+        Optional producto = productoRepository.findById(id);
+        if(producto.isPresent()){
+            //Mandamos el producto a la vista
+            model.addAttribute("producto",producto.get());
+            return "producto-view";
+        }
+        else{
+            return "redirect:/productos";
+        }
+    }
+
+    @GetMapping("/productos/new")
+    public String newProducto(){
+        return "producto-new";
+    }
+
+    @PostMapping("/productos/new")
+    public String newProductoInsert(){
+        //Insertamos los datos en la BD
+
+        //Redirigimos a /productos
+        return "redirect:/productos"
+    }
 
 }

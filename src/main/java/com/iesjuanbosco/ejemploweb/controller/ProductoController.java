@@ -103,7 +103,7 @@ public class ProductoController {
         //Insertamos los datos en la BD
 
         //Redirigimos a /productos
-        return "redirect:/productos"
+        return "redirect:/productos";
     }
 
 }

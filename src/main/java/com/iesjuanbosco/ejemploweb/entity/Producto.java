@@ -1,6 +1,7 @@
 package com.iesjuanbosco.ejemploweb.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
 
 @Entity     //Especifica que esta clase es una entidad
 @Table(name="productos")    //Incida que la tabla en la base de datos relacionada con esta entidad
@@ -9,8 +10,12 @@ public class Producto {
     @Id     //Esta anotación especifica que este campo va a ser la clave principal de la tabla en la base de datos
     @GeneratedValue(strategy = GenerationType.IDENTITY)     //Esta anotación especifica que la clave primaria sea "auto-increment"
     private Long id;
+    @NotEmpty (message = "El título no puede estar en blanco")
     private String titulo;
+    @NotNull (message = "La cantidad no puede estar en blanco")
     private Integer cantidad;
+    @NotNull (message = "El precio no puede estar en blanco")
+    @Min(value = 0, message = "El precio debe ser positivo")
     private Double precio;
 
     public Producto(Long id, String titulo, Integer cantidad, Double precio) {

@@ -25,19 +25,6 @@ public class ProductoController {
         this.productoRepository = repository;
     }
 
-    @GetMapping("/productos2")    //Anotación que indica la URL localhost:8080/productos2 mediante GET
-    @ResponseBody       //Anotación que indica que no pase por el motor de plantillas thymeleaf sino que voy a devolver yo el HTML diréctamente
-    public String index(){
-        List<Producto> productos = this.productoRepository.findAll();
-        StringBuilder HTML = new StringBuilder("<html><body>");
-        productos.forEach(producto -> {
-            HTML.append("<p>" + producto.getTitulo() + "</p>");
-        });
-        HTML.append("</body></html>");
-
-        return HTML.toString();
-    }
-
     /* Con la anotación GetMapping le indicamos a Spring que el siguiente método
        se va a ejecutar cuando el usuario acceda a la URL http://localhost/productos */
     @GetMapping("/productos")
@@ -96,6 +83,7 @@ public class ProductoController {
 
     @GetMapping("/productos/new")
     public String newProducto(Model model){
+
         model.addAttribute("producto", new Producto());
         return "producto-new";
     }
@@ -106,14 +94,16 @@ public class ProductoController {
         if(bindingResult.hasErrors()){
             return "producto-new";
         }
+
         //Si no ha habido errores de validación insertamos los datos en la BD
         productoRepository.save(producto);
         //Redirigimos a /productos
+
         return "redirect:/productos";
     }
 
     @GetMapping("/productos/edit/{id}")
-    public String newProducto(@PathVariable Long id, Model model){
+    public String editProducto(@PathVariable Long id, Model model){
         Optional<Producto> producto = productoRepository.findById(id);
         if(producto.isPresent()){
             //Pasamos el objeto a la vista
@@ -125,7 +115,7 @@ public class ProductoController {
     }
 
     @PostMapping("/productos/edit/{id}")
-    public String newProductoUpdate(@PathVariable Long id,
+    public String editProductoUpdate(@PathVariable Long id,
                                     Producto producto){
         producto.setId(id);
         productoRepository.save(producto);

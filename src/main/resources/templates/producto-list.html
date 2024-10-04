@@ -9,7 +9,7 @@
         <p th:if="${#lists.isEmpty(productos)}">No hay productos.</p>
         <ul>
             <li th:each="producto: ${productos}">
-                <a th:href="@{/productos/view/{id}(id=${producto.id})}"
+                <a th:href="@{'/productos/view/' + ${producto.id}}"
                    th:text="${producto.titulo}"></a>
                 <a th:href="@{/productos/del/{id}(id=${producto.id})}">borrar</a>
                 <!--Queremos cargar una ruta del tipo: /productos/del/3 -->

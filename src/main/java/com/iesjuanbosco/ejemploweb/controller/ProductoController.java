@@ -1,6 +1,7 @@
 package com.iesjuanbosco.ejemploweb.controller;
 
 import com.iesjuanbosco.ejemploweb.entity.Producto;
+import com.iesjuanbosco.ejemploweb.repository.CategoriaRepository;
 import com.iesjuanbosco.ejemploweb.repository.ProductoRepository;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,9 +21,12 @@ public class ProductoController {
 
     //Para acceder al repositorio creamos una propiedad y la asignamos en el constructor
     private ProductoRepository productoRepository;
+    private CategoriaRepository categoriaRepository;
 
-    public ProductoController(ProductoRepository repository){
-        this.productoRepository = repository;
+    public ProductoController(ProductoRepository productoRepository, CategoriaRepository categoriaRepository){
+
+        this.productoRepository = productoRepository;
+        this.categoriaRepository = categoriaRepository;
     }
 
     /* Con la anotación GetMapping le indicamos a Spring que el siguiente método

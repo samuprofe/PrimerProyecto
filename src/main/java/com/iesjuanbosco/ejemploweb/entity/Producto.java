@@ -18,11 +18,24 @@ public class Producto {
     @Min(value = 0, message = "El precio debe ser positivo")
     private Double precio;
 
+    @ManyToOne(targetEntity = Categoria.class)
+    @JoinColumn(name = "id_categoria")
+    private Categoria categoria;
+
     public Producto(Long id, String titulo, Integer cantidad, Double precio) {
         this.id = id;
         this.titulo = titulo;
         this.cantidad = cantidad;
         this.precio = precio;
+    }
+
+    public Categoria categoria() {
+        return categoria;
+    }
+
+    public Producto setCategoria(Categoria categoria) {
+        this.categoria = categoria;
+        return this;
     }
 
     public Producto() {

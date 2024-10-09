@@ -3,6 +3,9 @@ package com.iesjuanbosco.ejemploweb.entity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity     //Especifica que esta clase es una entidad
 @Table(name="productos")    //Incida que la tabla en la base de datos relacionada con esta entidad
 public class Producto {
@@ -21,8 +24,11 @@ public class Producto {
 
     @ManyToOne(targetEntity = Categoria.class)
     @JoinColumn(name = "id_categoria")
-
     private Categoria categoria;
+
+    @OneToMany(targetEntity = Comentario.class, cascade =CascadeType.ALL,
+    mappedBy = "producto")
+    private List<Comentario> comentario = new ArrayList<Comentario>();
 
     public Producto() {
     }

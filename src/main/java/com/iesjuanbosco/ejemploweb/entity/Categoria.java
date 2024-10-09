@@ -28,39 +28,35 @@ public class Categoria {
         this.productos = productos;
     }
 
-    public Long id() {
+    public Long getId() {
         return id;
     }
 
-    public Categoria setId(Long id) {
+    public void setId(Long id) {
         this.id = id;
-        return this;
     }
 
-    public String nombre() {
+    public String getNombre() {
         return nombre;
     }
 
-    public Categoria setNombre(String nombre) {
+    public void setNombre(String nombre) {
         this.nombre = nombre;
-        return this;
     }
 
-    public String descripcion() {
+    public String getDescripcion() {
         return descripcion;
     }
 
-    public Categoria setDescripcion(String descripcion) {
+    public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
-        return this;
     }
 
-    public List getProductos() {
+    public List<Producto> getProductos() {
         return productos;
     }
 
-    public Categoria setProductos(List productos) {
+    public void setProductos(List<Producto> productos) {
         this.productos = productos;
-        return this;
     }
 }

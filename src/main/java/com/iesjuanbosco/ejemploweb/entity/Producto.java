@@ -33,48 +33,43 @@ public class Producto {
         this.categoria = categoria;
     }
 
-    public Long id() {
+    public Long getId() {
         return id;
     }
 
-    public Producto setId(Long id) {
+    public void setId(Long id) {
         this.id = id;
-        return this;
     }
 
-    public String titulo() {
+    public @NotEmpty(message = "El título no puede estar en blanco") String getTitulo() {
         return titulo;
     }
 
-    public Producto setTitulo(String titulo) {
+    public void setTitulo(@NotEmpty(message = "El título no puede estar en blanco") String titulo) {
         this.titulo = titulo;
-        return this;
     }
 
-    public Integer cantidad() {
+    public @NotNull(message = "La cantidad no puede estar en blanco") Integer getCantidad() {
         return cantidad;
     }
 
-    public Producto setCantidad(Integer cantidad) {
+    public void setCantidad(@NotNull(message = "La cantidad no puede estar en blanco") Integer cantidad) {
         this.cantidad = cantidad;
-        return this;
     }
 
-    public Double precio() {
+    public @NotNull(message = "El precio no puede estar en blanco") @Min(value = 0, message = "El precio debe ser positivo") Double getPrecio() {
         return precio;
     }
 
-    public Producto setPrecio(Double precio) {
+    public void setPrecio(@NotNull(message = "El precio no puede estar en blanco") @Min(value = 0, message = "El precio debe ser positivo") Double precio) {
         this.precio = precio;
-        return this;
     }
 
-    public Categoria categoria() {
+    public Categoria getCategoria() {
         return categoria;
     }
 
-    public Producto setCategoria(Categoria categoria) {
+    public void setCategoria(Categoria categoria) {
         this.categoria = categoria;
-        return this;
     }
 }

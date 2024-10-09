@@ -54,10 +54,10 @@ public class ProductoController {
         productos.add(p3);
         productos.add(p4);
 
-        //Guardamos todos los productos en la base de datos utilizando el objeto productoRepository
+        //Guardamos todos los getProductos en la base de datos utilizando el objeto productoRepository
         this.productoRepository.saveAll(productos);
 
-        //Redirige al controlador /productos
+        //Redirige al controlador /getProductos
         return "redirect:/productos";
     }
 
@@ -66,7 +66,7 @@ public class ProductoController {
     public String delete(@PathVariable Long id){
         //Borrar el producto usando el repositorio
         productoRepository.deleteById(id);
-        //Redirigir al listado de productos: /productos
+        //Redirigir al listado de getProductos: /getProductos
         return "redirect:/productos";
     }
 
@@ -101,7 +101,7 @@ public class ProductoController {
 
         //Si no ha habido errores de validación insertamos los datos en la BD
         productoRepository.save(producto);
-        //Redirigimos a /productos
+        //Redirigimos a /getProductos
 
         return "redirect:/productos";
     }

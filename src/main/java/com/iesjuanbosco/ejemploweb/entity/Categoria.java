@@ -1,11 +1,11 @@
 package com.iesjuanbosco.ejemploweb.entity;
 
 import jakarta.persistence.*;
-
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+@Table(name="categorias")
 public class Categoria {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -15,7 +15,8 @@ public class Categoria {
 
     @OneToMany(targetEntity = Producto.class, cascade = CascadeType.ALL,
             mappedBy = "categoria")
-    private List productos = new ArrayList();
+
+    private List<Producto> productos = new ArrayList<>();
 
     public Categoria() {
     }
@@ -54,7 +55,7 @@ public class Categoria {
         return this;
     }
 
-    public List productos() {
+    public List getProductos() {
         return productos;
     }
 

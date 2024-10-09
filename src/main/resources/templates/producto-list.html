@@ -13,7 +13,7 @@
                    th:text="${producto.titulo}"></a>
                 <span th:if="${producto.categoria != null}" th:text="'['+${producto.categoria.nombre}+']'"></span>
                 <a th:href="@{/productos/del/{id}(id=${producto.id})}">borrar</a>
-                <!--Queremos cargar una ruta del tipo: /productos/del/3 -->
+                <!--Queremos cargar una ruta del tipo: /getProductos/del/3 -->
                 <a th:href="@{/productos/edit/{id}(id=${producto.id})}">editar</a>
             </li>
         </ul>

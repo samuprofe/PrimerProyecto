@@ -11,6 +11,7 @@ public class Producto {
     @GeneratedValue(strategy = GenerationType.IDENTITY)     //Esta anotación especifica que la clave primaria sea "auto-increment"
     private Long id;
     @NotEmpty (message = "El título no puede estar en blanco")
+    @Column(length = 1000)
     private String titulo;
     @NotNull (message = "La cantidad no puede estar en blanco")
     private Integer cantidad;
@@ -20,6 +21,7 @@ public class Producto {
 
     @ManyToOne(targetEntity = Categoria.class)
     @JoinColumn(name = "id_categoria")
+
     private Categoria categoria;
 
     public Producto() {

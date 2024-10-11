@@ -7,7 +7,7 @@
 <body>
 
     <select name="categoria" id="categoria" onchange="location.href = '/productos/categoria/'+this.value">
-
+        <option value="-1">Todas las categorias</option>
         <option th:each="categoria : ${categorias}"
                 th:value="${categoria.id}"
                 th:text="${categoria.nombre}"

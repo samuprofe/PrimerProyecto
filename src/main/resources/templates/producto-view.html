@@ -10,7 +10,15 @@
 <h2 th:text="${producto.titulo}"></h2>
 <p>Cantidad: <span th:text="${producto.cantidad}"></span><br>
     Precio: <span th:text="${producto.precio}"></span><br>
-
+<br>
+<div id="Comentarios" style="min-height: 100px;  padding: 5px;">
+<h4>Comentarios</h4>
+</div>
+<br>
+<form>
+    <textarea placeholder="Comentario..." style="border: 1px solid black; display: block; height: 50px; width: 90%"></textarea><br>
+    <input type="submit" value="Añadir comentario"><br>
+</form>
 <a th:href="@{/productos}">Volver al listado</a>
 
 </body>

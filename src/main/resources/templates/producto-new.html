@@ -11,7 +11,11 @@
     <br>
   <input type="number" placeholder="Cantidad..." id="cantidad" name="cantidad" th:field="*{cantidad}" ><br>
   <input type="number" min="0" step="0.01" placeholder="Precio..." id="precio" name="precio" th:field="*{precio}" ><br>
-  <input type="submit" value="insertar">
+    <select id="categoria" name="categoria" th:field="*{categoria}">
+        <option value="">Selecciona una categoria</option>
+        <option th:each="categoria : ${categorias}" th:text="${categoria.nombre}" th:value="${categoria.id}"></option>
+    </select><br>
+    <input type="submit" value="insertar">
 </form>
 </body>
 </html>

@@ -5,6 +5,11 @@
     <title th:text="${titulo}"></title>
 </head>
 <body>
+
+    <select name="categoria" id="categoria" onchange="location.href = '/productos/categorias/'+this.value">
+        <option th:each="categoria : ${categorias}" th:value="${categoria.id}" th:text="${categoria.nombre}"></option>
+    </select>
+
     <div id="productos">
         <p th:if="${#lists.isEmpty(productos)}">No hay productos.</p>
         <ul>

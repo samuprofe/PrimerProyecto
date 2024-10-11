@@ -24,11 +24,12 @@ public class Producto {
 
     @ManyToOne(targetEntity = Categoria.class)
     @JoinColumn(name = "id_categoria")
+    @NotNull
     private Categoria categoria;
 
     @OneToMany(targetEntity = Comentario.class, cascade =CascadeType.ALL,
     mappedBy = "producto")
-    private List<Comentario> comentario = new ArrayList<Comentario>();
+    private List<Comentario> comentarios = new ArrayList<Comentario>(); //Obligatorio inicializarlo
 
     public Producto() {
     }

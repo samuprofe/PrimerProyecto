@@ -1,10 +1,12 @@
 package com.iesjuanbosco.ejemploweb.controller;
 
+import com.iesjuanbosco.ejemploweb.entity.Categoria;
 import com.iesjuanbosco.ejemploweb.entity.Producto;
 import com.iesjuanbosco.ejemploweb.repository.CategoriaRepository;
 import com.iesjuanbosco.ejemploweb.repository.ProductoRepository;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -33,10 +35,12 @@ public class ProductoController {
        se va a ejecutar cuando el usuario acceda a la URL http://localhost/productos */
     @GetMapping("/productos")
     public String findAll(Model model){
-        List<Producto> productos = this.productoRepository.findAll();
 
+        List<Producto> productos = this.productoRepository.findAll();
+        List<Categoria> categorias = this.categoriaRepository.findAll();
         //Pasamos los datos a la vista
         model.addAttribute("productos",productos);
+        model.addAttribute("categorias",categorias);
         model.addAttribute("titulo","Titulo de página");
 
         return "producto-list";
@@ -89,20 +93,23 @@ public class ProductoController {
     public String newProducto(Model model){
 
         model.addAttribute("producto", new Producto());
+        model.addAttribute("categorias", categoriaRepository.findAll());
         return "producto-new";
     }
 
     @PostMapping("/productos/new")
-    public String newProductoInsert(@Valid Producto producto, BindingResult bindingResult){
+    public String newProductoInsert(Model model, @Valid Producto producto, BindingResult bindingResult){
         //Si ha habido errores de validación volvemos a mostrar el formulario
         if(bindingResult.hasErrors()){
+            Sort sort = Sort.by("nombre").ascending();
+            model.addAttribute("categorias", categoriaRepository.findAll(sort));
             return "producto-new";
         }
 
         //Si no ha habido errores de validación insertamos los datos en la BD
         productoRepository.save(producto);
-        //Redirigimos a /getProductos
 
+        //Redirigimos a /getProductos
         return "redirect:/productos";
     }
 

@@ -6,8 +6,14 @@
 </head>
 <body>
 
-    <select name="categoria" id="categoria" onchange="location.href = '/productos/categorias/'+this.value">
-        <option th:each="categoria : ${categorias}" th:value="${categoria.id}" th:text="${categoria.nombre}"></option>
+    <select name="categoria" id="categoria" onchange="location.href = '/productos/categoria/'+this.value">
+
+        <option th:each="categoria : ${categorias}"
+                th:value="${categoria.id}"
+                th:text="${categoria.nombre}"
+                th:selected="${categoria.id == selectedCategoriaId}">
+        </option>
+
     </select>
 
     <div id="productos">

@@ -46,6 +46,27 @@ public class ProductoController {
         return "producto-list";
     }
 
+    @GetMapping("/productos/categoria/{id}")
+    public String findAll(Model model, @PathVariable Long id) {
+
+        Optional<Categoria> categoriaSeleccionada = categoriaRepository.findById(id);
+        if (categoriaSeleccionada.isPresent()) {
+            List<Producto> productos = this.productoRepository.findByCategoria(categoriaSeleccionada.get());
+            List<Categoria> categorias = this.categoriaRepository.findAll();
+            //Pasamos los datos a la vista
+            //Pasamos el id de la categoría seleccionada, lo paso para que thymeleaf me ponga el selected="selected"
+            //en la categoría que estamos y aparezca seleccionada en el desplegable
+            model.addAttribute("selectedCategoriaId", id);
+            model.addAttribute("productos", productos);
+            model.addAttribute("categorias", categorias);
+
+            return "producto-list";
+        } else {
+            //Categoría seleccionada no existe, redirijo a listado de productos
+            return "redirect:/productos";
+        }
+    }
+
     @GetMapping("/productos/add")
     public String add(){
         List<Producto> productos = new ArrayList<Producto>();

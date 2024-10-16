@@ -1,15 +1,15 @@
 package com.iesjuanbosco.ejemploweb.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDate;
 
-@Data
+//Anotaciones de LomBok
+@Data   //Incluye @ToString, @Getter, @Setter, @RequiredArgsConstructor y @EqualsAndHashCode
 @NoArgsConstructor
 @AllArgsConstructor
+//Anotacion de Spring Data JPA
 @Entity
 public class Comentario {
 

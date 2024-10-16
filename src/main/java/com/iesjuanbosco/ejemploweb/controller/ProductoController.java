@@ -1,8 +1,10 @@
 package com.iesjuanbosco.ejemploweb.controller;
 
 import com.iesjuanbosco.ejemploweb.entity.Categoria;
+import com.iesjuanbosco.ejemploweb.entity.Comentario;
 import com.iesjuanbosco.ejemploweb.entity.Producto;
 import com.iesjuanbosco.ejemploweb.repository.CategoriaRepository;
+import com.iesjuanbosco.ejemploweb.repository.ComentarioRepository;
 import com.iesjuanbosco.ejemploweb.repository.ProductoRepository;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,10 +26,12 @@ public class ProductoController {
     //Para acceder al repositorio creamos una propiedad y la asignamos en el constructor
     private ProductoRepository productoRepository;
     private CategoriaRepository categoriaRepository;
+    private ComentarioRepository comentarioRepository;
 
-    public ProductoController(ProductoRepository productoRepository, CategoriaRepository categoriaRepository){
+    public ProductoController(ProductoRepository productoRepository, CategoriaRepository categoriaRepository, ComentarioRepository comentarioRepository) {
         this.productoRepository = productoRepository;
         this.categoriaRepository = categoriaRepository;
+        this.comentarioRepository = comentarioRepository;
     }
 
     /* Con la anotación GetMapping le indicamos a Spring que el siguiente método
@@ -103,8 +107,11 @@ public class ProductoController {
         //Obtenemos el producto de la BD a partir del id de la barra de direcciones
         Optional<Producto> producto = productoRepository.findById(id);
         if(producto.isPresent()){
-            //Mandamos el producto a la vista
+            List <Comentario> comentarios = comentarioRepository.findByProductoOrderByFechaDesc(producto.get());
+            //Mandamos el producto y los comentarios a la vista
             model.addAttribute("producto",producto.get());
+            model.addAttribute("comentarios",comentarios);
+            model.addAttribute("comentario", new Comentario());
             return "producto-view";
         }
         else{

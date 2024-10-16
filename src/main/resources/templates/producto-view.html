@@ -13,12 +13,18 @@
 <br>
 <div id="Comentarios" style="min-height: 100px;  padding: 5px;">
 <h4>Comentarios</h4>
+    <div th:each="comentario: ${comentarios}">
+        <p><span th:text="${comentario.texto}"></span>. (<span th:text="${comentario.fecha}"></span>)</p>
+
+    </div>
 </div>
 <br>
-<form>
-    <textarea placeholder="Comentario..." style="border: 1px solid black; display: block; height: 50px; width: 90%"></textarea><br>
+<form  th:action="@{/productos/view/{idProducto}/comentarios/add(idProducto=${producto.id})}"
+       th:object="${comentario}" method="post">
+    <textarea placeholder="Comentario..." th:field="*{texto}" style="border: 1px solid black; display: block; height: 50px; width: 90%"></textarea><br>
     <input type="submit" value="Añadir comentario"><br>
 </form>
+<br>
 <a th:href="@{/productos}">Volver al listado</a>
 
 </body>

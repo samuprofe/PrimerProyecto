@@ -10,5 +10,5 @@ import lombok.NoArgsConstructor;
 public class CategoriaCosteMedioDTO {
     private String nombreCategoria;
     private Double costeMedio;
-    private Double numeroProductos;
+    private Long numeroProductos;
 }

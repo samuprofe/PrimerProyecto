@@ -9,6 +9,7 @@ import java.time.LocalDate;
 @Data   //Incluye @ToString, @Getter, @Setter, @RequiredArgsConstructor y @EqualsAndHashCode
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder    //Patron Builder
 //Anotacion de Spring Data JPA
 @Entity
 public class Comentario {

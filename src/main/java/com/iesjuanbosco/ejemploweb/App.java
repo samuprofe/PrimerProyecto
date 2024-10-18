@@ -9,6 +9,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ConfigurableApplicationContext;
 
+import java.util.ArrayList;
+
 @SpringBootApplication
 public class App {
 
@@ -25,20 +27,32 @@ public class App {
 		ProductoRepository productoRepository =  contex.getBean(ProductoRepository.class);
 		CategoriaRepository categoriaRepository = contex.getBean(CategoriaRepository.class);
 
-		Producto p1 =new Producto(null, "titulo",10,50.5);
-		Producto p2 =new Producto(null, "titulo2",15,70.5);
-		Categoria c = new Categoria(null, "Moviles", "Los mejores móviles");
+		Categoria categoria = Categoria
+				.builder()
+				.nombre("Móviles")
+				.descripcion("Los mejores móviles")
+				.productos(new ArrayList<Producto>())
+				.build();
+		Producto p1 = Producto.builder()
+				.cantidad(50)
+				.precio(500.0)
+				.titulo("Producto 1")
+				.categoria(categoria)
+				.build();
+		Producto p2 = Producto.builder()
+				.cantidad(100)
+				.precio(200.0)
+				.titulo("Producto 2")
+				.categoria(categoria)
+				.build();
 
-		//Añado el producto 1 a la categoría Móviles
-		p1.setCategoria(c);
-		c.getProductos().add(p1);
-
-		//Añado el producto 2 a la categoría Móviles
-		p2.setCategoria(c);
-		c.getProductos().add(p2);
+		//Añado los productos a la categoria
+		//categoria.setProductos(new ArrayList<Producto>());
+		categoria.getProductos().add(p1);
+		categoria.getProductos().add(p2);
 
 		//Como la relación tiene CASCADE.ALL se guardan en cascada y guarda los productos de la categoría
-		categoriaRepository.save(c);
+		categoriaRepository.save(categoria);
 
 
 

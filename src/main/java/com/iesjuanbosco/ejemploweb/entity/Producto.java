@@ -2,10 +2,20 @@ package com.iesjuanbosco.ejemploweb.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
 
+//Anotaciones de LomBok
+@Data   //Incluye @ToString, @Getter, @Setter, @RequiredArgsConstructor y @EqualsAndHashCode
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder    //Patron Builder
+//Anotacion de Spring Data JPA
 @Entity     //Especifica que esta clase es una entidad
 @Table(name="productos")    //Incida que la tabla en la base de datos relacionada con esta entidad
 public class Producto {
@@ -31,54 +41,4 @@ public class Producto {
     mappedBy = "producto")
     private List<Comentario> comentarios = new ArrayList<Comentario>(); //Obligatorio inicializarlo
 
-    public Producto() {
-    }
-
-    public Producto(Long id, String titulo, Integer cantidad, Double precio) {
-        this.id = id;
-        this.titulo = titulo;
-        this.cantidad = cantidad;
-        this.precio = precio;
-        this.categoria = categoria;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public @NotEmpty(message = "El título no puede estar en blanco") String getTitulo() {
-        return titulo;
-    }
-
-    public void setTitulo(@NotEmpty(message = "El título no puede estar en blanco") String titulo) {
-        this.titulo = titulo;
-    }
-
-    public @NotNull(message = "La cantidad no puede estar en blanco") Integer getCantidad() {
-        return cantidad;
-    }
-
-    public void setCantidad(@NotNull(message = "La cantidad no puede estar en blanco") Integer cantidad) {
-        this.cantidad = cantidad;
-    }
-
-    public @NotNull(message = "El precio no puede estar en blanco") @Min(value = 0, message = "El precio debe ser positivo") Double getPrecio() {
-        return precio;
-    }
-
-    public void setPrecio(@NotNull(message = "El precio no puede estar en blanco") @Min(value = 0, message = "El precio debe ser positivo") Double precio) {
-        this.precio = precio;
-    }
-
-    public Categoria getCategoria() {
-        return categoria;
-    }
-
-    public void setCategoria(Categoria categoria) {
-        this.categoria = categoria;
-    }
 }

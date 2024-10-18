@@ -9,6 +9,19 @@
 		//Spring Security (login, logout)
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
 		Long countByCategoria(Categoria categoria);
 
     	@Query("SELECT COUNT(p) FROM Producto p WHERE p.categoria.id = :categoriaId")
@@ -29,6 +42,7 @@
         @Query("SELECT new com.iesjuanbosco.ejemploweb.dto.CategoriaCosteMedioDTO(c.nombre, AVG(p.precio)) " +
                    "FROM Categoria c LEFT JOIN c.productos p GROUP BY c.id")
         List<CategoriaCosteMedioDTO> obtenerCosteMedioPorCategorias();
+
 
         @Query(value = "SELECT c.nombre AS nombreCategoria, AVG(p.precio) AS costeMedio " +
                        "FROM categorias c LEFT JOIN productos p ON c.id = p.id_categoria " +

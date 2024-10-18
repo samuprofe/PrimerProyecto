@@ -73,24 +73,6 @@ public class ProductoController {
         }
     }
 
-    @GetMapping("/productos/add")
-    public String add(){
-        List<Producto> productos = new ArrayList<Producto>();
-        Producto p1 = new Producto(null, "Producto 1", 20, 45.5);
-        Producto p2 = new Producto(null, "Producto 2", 50, 5.0);
-        Producto p3 = new Producto(null, "Producto 3", 30, 50.5);
-        Producto p4 = new Producto(null, "Producto 4", 10, 30.0);
-        productos.add(p1);
-        productos.add(p2);
-        productos.add(p3);
-        productos.add(p4);
-
-        //Guardamos todos los getProductos en la base de datos utilizando el objeto productoRepository
-        this.productoRepository.saveAll(productos);
-
-        //Redirige al controlador /getProductos
-        return "redirect:/productos";
-    }
 
     //Borra un producto a partir del id de la ruta
     @GetMapping("/productos/del/{id}")

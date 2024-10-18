@@ -15,7 +15,6 @@ import java.util.List;
 @Repository //Indica que esta clase es un repositorio
 public interface ProductoRepository extends JpaRepository<Producto,Long> {
     List<Producto> findByCategoria(Categoria categoria);
-    List<Producto> findFirstOrderByPrecioDesc();
     Long countByCategoria(Categoria categoria); //Número de productos en una categoría
 
     @Query("SELECT AVG(p.precio) FROM Producto p WHERE p.categoria.id = :categoriaId")

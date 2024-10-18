@@ -18,7 +18,7 @@ public class CategoriaController {
 
     @GetMapping ("/categorias/")
     public String categoria(Model model) {
-        List<CategoriaCosteMedioDTO> categorias = categoriaRepository.obtenerCosteMedioPorCategorias();
+        List<CategoriaCosteMedioDTO> categorias = categoriaRepository.obtenerCategoriasConStats();
         model.addAttribute("categorias", categorias);
         return "categoria-list";
     }

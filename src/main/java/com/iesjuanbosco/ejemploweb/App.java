@@ -21,7 +21,7 @@ public class App {
 		para, por ejemplo, insertar datos de ejemplo nada más ejecutar la app
 		*/
 
-		/*
+
 		ProductoRepository productoRepository =  contex.getBean(ProductoRepository.class);
 		CategoriaRepository categoriaRepository = contex.getBean(CategoriaRepository.class);
 
@@ -38,9 +38,19 @@ public class App {
 		c.getProductos().add(p2);
 
 		//Como la relación tiene CASCADE.ALL se guardan en cascada y guarda los productos de la categoría
-		//categoriaRepository.save(c);
+		categoriaRepository.save(c);
 
-		 */
+
 	}
+
+	//Completar con LomBok (Patron Builder)
+	//Ver consultas JPQL y Nativas
+	//Crear listado de categorias con número de productos y precio medio
+	//Añadir Foto a la categoría y varias fotos a los productos
+	//Ámbito de los objetos. Ambito de sesion mediante HttpSession session o con la anotación @SessionScope @Component y luego inyectándolo.
+	//Pasar mensajes de una página a otra.
+	//Cookies
+	//Spring Security
+
 
 }

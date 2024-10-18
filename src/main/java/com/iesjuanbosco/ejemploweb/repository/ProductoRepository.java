@@ -10,4 +10,5 @@ import java.util.List;
 @Repository //Indica que esta clase es un repositorio
 public interface ProductoRepository extends JpaRepository<Producto,Long> {
     List<Producto> findByCategoria(Categoria categoria);
+    Long countByCategoria(Categoria categoria);
 }

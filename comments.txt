@@ -9,6 +9,8 @@
 
 		//2º Trimestre: APIS, Servicios REST, AJAX, etc.
 
+		//Comprobar errores y excepciones: Si un elemento a borrar no existe, si no eres el propietario, etc.
+
 
 
 

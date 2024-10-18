@@ -41,16 +41,7 @@ public class App {
 		categoriaRepository.save(c);
 
 
+
 	}
-
-	//Completar con LomBok (Patron Builder)
-	//Ver consultas JPQL y Nativas
-	//Crear listado de categorias con número de productos y precio medio
-	//Añadir Foto a la categoría y varias fotos a los productos
-	//Ámbito de los objetos. Ambito de sesion mediante HttpSession session o con la anotación @SessionScope @Component y luego inyectándolo.
-	//Pasar mensajes de una página a otra.
-	//Cookies
-	//Spring Security
-
 
 }

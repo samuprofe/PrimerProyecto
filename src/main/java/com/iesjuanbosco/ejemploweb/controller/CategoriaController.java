@@ -18,8 +18,11 @@ public class CategoriaController {
 
     @GetMapping ("/categorias/")
     public String categoria(Model model) {
-        List<CategoriaCosteMedioDTO> categorias = categoriaRepository.obtenerCategoriasConStats();
-        model.addAttribute("categorias", categorias);
+        //Con esto obtendríamos todas las categorías
+        //List<Categoria> categorias  = categoriaRepository.findAll();
+        //Esto lo añadimos para obtener el coste medio y númro de productos por categoria
+        List<CategoriaCosteMedioDTO> categoriasConStats = categoriaRepository.obtenerCategoriasConStats();
+        model.addAttribute("categorias", categoriasConStats);
         return "categoria-list";
     }
 }

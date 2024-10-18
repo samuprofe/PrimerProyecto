@@ -8,7 +8,7 @@
 		//Cookies
 		//Spring Security (login, logout)
 
-		/*
+
 		    Long countByCategoria(Categoria categoria);
 
     		@Query("SELECT COUNT(p) FROM Producto p WHERE p.categoria.id = :categoriaId")
@@ -19,4 +19,13 @@
 
 		    @Query("SELECT AVG(p.precio) FROM Producto p WHERE p.categoria.id = :categoriaId")
     		Double AVGPrecioByCategoria(@Param("categoriaId") Long categoriaId);
-		 */
+
+
+		//CategoriaCosteMedioDTO
+		public class CategoriaCosteMedioDTO {
+            private String nombreCategoria;
+            private Double costeMedio;
+        }
+        @Query("SELECT new com.iesjuanbosco.ejemploweb.dto.CategoriaCosteMedioDTO(c.nombre, AVG(p.precio)) " +
+                   "FROM Categoria c LEFT JOIN c.productos p GROUP BY c.id")
+            List<CategoriaCosteMedioDTO> obtenerCosteMedioPorCategoria();

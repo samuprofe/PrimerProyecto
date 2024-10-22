@@ -11,7 +11,7 @@ import java.util.List;
 
 //Anotaciones de LomBok
 @Data   //Incluye @ToString, @Getter, @Setter, @RequiredArgsConstructor y @EqualsAndHashCode
-@NoArgsConstructor
+//@NoArgsConstructor
 @AllArgsConstructor
 @Builder    //Patron Builder
 //Anotacion de Spring Data JPA
@@ -28,6 +28,5 @@ public class Categoria {
     @OneToMany(targetEntity = Producto.class, cascade = CascadeType.ALL,
             mappedBy = "categoria")
     private List<Producto> productos = new ArrayList<>();
-
 
 }

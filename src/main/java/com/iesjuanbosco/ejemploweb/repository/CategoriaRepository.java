@@ -12,7 +12,7 @@ import java.util.List;
 public interface CategoriaRepository extends JpaRepository<Categoria, Long> {
 
     //Consulta JPQL
-    @Query("SELECT new com.iesjuanbosco.ejemploweb.DTO.CategoriaCosteMedioDTO(c.id, c.nombre, AVG(p.precio), count(p)) " +
+    @Query("SELECT new com.iesjuanbosco.ejemploweb.DTO.CategoriaCosteMedioDTO(c.id, c.nombre, AVG(p.precio), count(p), c.foto) " +
             "FROM Categoria c LEFT JOIN c.productos p GROUP BY c.id")
     List<CategoriaCosteMedioDTO> obtenerCategoriasConStats();
 }

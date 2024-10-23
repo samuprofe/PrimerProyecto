@@ -22,6 +22,7 @@ public class Categoria {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String nombre;
+    @Column(length = 1000)
     private String descripcion;
     private String foto;
 

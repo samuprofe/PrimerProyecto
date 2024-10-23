@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Insertar categoria</title>
+</head>
+<body>
+<form method="POST" th:action="@{/categorias/new}" th:object="${categoria}" enctype="multipart/form-data">
+    <input type="text" name="nombre" th:field="*{nombre}" placeholder="Nombre"><br>
+    <input type="file" name="file" placeholder="Imagen"><br>
+    <textarea name="descripcion" th:field="*{descripcion}" placeholder="Descripcion"></textarea><br>
+    <input type="submit" value="Nueva categoría"><br>
+</form>
+</body>
+</html>

@@ -18,6 +18,7 @@
 <body>
 <div class="container mt-5">
     <h2 class="text-center mb-4">Lista de Categorías</h2>
+    <img th:src="@{/images/logo.avif}" class="rounded mx-auto d-block" style="height: 80px">
     <table class="table table-bordered table-striped">
         <thead>
         <tr>
@@ -31,6 +32,7 @@
         <!-- Iteramos sobre la lista de categoriasConStats -->
         <tr th:each="categoria : ${categorias}">
             <td>
+                <img th:src="@{'/imagesCategorias/' + ${categoria.foto}}" class="rounded mx-auto d-block" style="height: 80px"></img>
                 <a th:href="@{/productos/categoria/{id}(id=${categoria.id})}"
                    th:text="${categoria.nombreCategoria}"></a>
             </td>
@@ -43,6 +45,7 @@
         </tr>
         </tbody>
     </table>
+    <a th:href="@{/categorias/new}" class="btn btn-primary">Agregar</a>
 </div>
 </body>
 </html>

@@ -52,7 +52,7 @@ public class App {
 		categoria.getProductos().add(p2);
 
 		//Como la relación tiene CASCADE.ALL se guardan en cascada y guarda los productos de la categoría
-		categoriaRepository.save(categoria);
+		//categoriaRepository.save(categoria);
 
 
 

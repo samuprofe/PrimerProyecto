@@ -12,4 +12,5 @@ public class CategoriaCosteMedioDTO {
     private String nombreCategoria;
     private Double costeMedio;
     private Long numeroProductos;
+    private String foto;
 }

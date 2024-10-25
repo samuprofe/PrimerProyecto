@@ -5,6 +5,7 @@
     <title>Insertar categoria</title>
 </head>
 <body>
+<h3 th:value="${mensaje}"></h3>
 <form method="POST" th:action="@{/categorias/new}" th:object="${categoria}" enctype="multipart/form-data">
     <input type="text" name="nombre" th:field="*{nombre}" placeholder="Nombre"><br>
     <input type="file" name="file" placeholder="Imagen"><br>

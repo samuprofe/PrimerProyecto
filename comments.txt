@@ -14,6 +14,23 @@
 
 
 
+        Descargaros el repositorio y observar cambios en el controlador categoriaController. Se ha añadido una clase CategoriaService
+        donde se ha movido toda la lógica de negorio y el acceso a los datos. Es recomendable crear un Servicio para cada Controlador,
+        así la lógica de negocio y el acceso a los repositorios se hace desde el Servicio. El controlador se dedicará únicamente a las
+        peticiones y respuestas HTTP. Hasta ahora no lo habíamos hecho para verlo más sencillo pero se debe hacer siempre. Se añade
+        una nueva capa para el acceso a los datos. Cuesta un poco más de hacer pero es buena práctica y mucho mejor para mantener
+        después la app.
+
+                        MySQL <-- Repository <-- Service <-- Controller
+
+        También se ha añadido lo que nos faltó de validación. Si la imagen no tiene el formato o tamaño correcto
+        se lanza una excepción que se captura desde el controlador y en vez de redirigir volvemos a mostrar el formulario. Además
+        mostramos el mensaje al usuario.
+
+        Hoy, añadir una nueva Entidad llamada Fotos con id (Long) y ruta (String) relacionada con Producto de forma que cada producto
+        pueda tener varias fotos. Añadir al formulario de insertar producto un input de tipo file pero que permita seleccionar
+        varios archivos( multiple ). En la vista de ver el producto se mostrarán todas las fotos. En editar se mostrarán todas junto
+        con un campo file que permita añadir y una cruz al lado de cada foto que permita borrarla.
 
 
 
@@ -24,30 +41,3 @@
 
 
 
-
-		Long countByCategoria(Categoria categoria);
-
-    	@Query("SELECT COUNT(p) FROM Producto p WHERE p.categoria.id = :categoriaId")
-    	long countByIdCategoria(@Param("categoriaId") Long categoriaId);
-
-		@Query(value = "SELECT COUNT(*) FROM producto WHERE categoria_id = :categoriaId", nativeQuery = true)
-    	Long countByIdCategoriaNativa(@Param("categoriaId") Long categoriaId);
-
-		@Query("SELECT AVG(p.precio) FROM Producto p WHERE p.categoria.id = :categoriaId")
-    	Double AVGPrecioByCategoria(@Param("categoriaId") Long categoriaId);
-
-
-		//CategoriaCosteMedioDTO
-		public class CategoriaCosteMedioDTO {
-            private String nombreCategoria;
-            private Double costeMedio;
-        }
-        @Query("SELECT new com.iesjuanbosco.ejemploweb.dto.CategoriaCosteMedioDTO(c.nombre, AVG(p.precio)) " +
-                   "FROM Categoria c LEFT JOIN c.productos p GROUP BY c.id")
-        List<CategoriaCosteMedioDTO> obtenerCosteMedioPorCategorias();
-
-
-        @Query(value = "SELECT c.nombre AS nombreCategoria, AVG(p.precio) AS costeMedio " +
-                       "FROM categorias c LEFT JOIN productos p ON c.id = p.id_categoria " +
-                       "GROUP BY c.id", nativeQuery = true)
-        List<CategoriaCosteMedioDTO> obtenerCosteMedioPorCategorias();

@@ -11,7 +11,7 @@ import java.util.List;
 
 //Anotaciones de LomBok
 @Data   //Incluye @ToString, @Getter, @Setter, @RequiredArgsConstructor y @EqualsAndHashCode
-//@NoArgsConstructor
+@NoArgsConstructor
 @AllArgsConstructor
 @Builder    //Patron Builder
 //Anotacion de Spring Data JPA

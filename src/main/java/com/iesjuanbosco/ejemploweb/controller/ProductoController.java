@@ -2,7 +2,9 @@ package com.iesjuanbosco.ejemploweb.controller;
 
 import com.iesjuanbosco.ejemploweb.entity.Categoria;
 import com.iesjuanbosco.ejemploweb.entity.Comentario;
+import com.iesjuanbosco.ejemploweb.entity.FotoProducto;
 import com.iesjuanbosco.ejemploweb.entity.Producto;
+import com.iesjuanbosco.ejemploweb.service.FotoProductoService;
 import com.iesjuanbosco.ejemploweb.service.ProductoService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +12,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,10 +22,12 @@ import java.util.Optional;
 public class ProductoController {
 
     private final ProductoService productoService;
+    private final FotoProductoService fotoProductoService;
 
     @Autowired
-    public ProductoController(ProductoService productoService) {
+    public ProductoController(ProductoService productoService, FotoProductoService fotoProductoService) {
         this.productoService = productoService;
+        this.fotoProductoService = fotoProductoService;
     }
 
     @GetMapping("/productos")
@@ -73,11 +79,17 @@ public class ProductoController {
     }
 
     @PostMapping("/productos/new")
-    public String newProductoInsert(Model model, @Valid Producto producto, BindingResult bindingResult) {
+    public String newProductoInsert(Model model, @Valid Producto producto,
+                                    BindingResult bindingResult, @RequestParam("archivosFotos") List<MultipartFile> fotos) {
         if (bindingResult.hasErrors()) {
             model.addAttribute("categorias", productoService.findAllCategoriasSorted());
             return "producto-new";
         }
+
+        //Guardar fotos
+        fotoProductoService.guardarFotos(fotos, producto);
+
+        //Guardar producto
         productoService.saveProducto(producto);
         return "redirect:/productos";
     }

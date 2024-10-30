@@ -1,0 +1,13 @@
+.foto-container {
+    display: flex; /* Para alinear las capas horizontalmente */
+    flex-wrap: wrap; /* Para permitir que las capas salten a la siguiente línea */
+}
+
+.foto {
+    width: 150px;
+    height: 100px;
+    background-size: cover;
+    background-position: center;
+    margin: 5px;
+    border: 1px solid #ccc;
+}

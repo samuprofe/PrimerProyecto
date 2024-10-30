@@ -40,12 +40,13 @@ public class CategoriaController {
     @PostMapping("/categorias/new")
     public String addCategoriaInsert(@ModelAttribute("categoria") Categoria categoria,
                                      @RequestParam("file") MultipartFile file,
-                                     RedirectAttributes redirectAttributes) {
+                                     RedirectAttributes redirectAttributes,
+                                     Model model) {
         try {
             categoriaService.guardarCategoria(categoria, file);
         } catch (IllegalArgumentException e) {
-            redirectAttributes.addFlashAttribute("mensaje", e.getMessage());
-            return "redirect:/categorias/new";
+            model.addAttribute("mensaje",e.getMessage());
+            return "categoria-new";
         }
         return "redirect:/categorias";
     }

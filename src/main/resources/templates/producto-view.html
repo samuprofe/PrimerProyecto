@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title></title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}" />
 </head>
 <body>
 
@@ -11,11 +12,19 @@
 <p>Cantidad: <span th:text="${producto.cantidad}"></span><br>
     Precio: <span th:text="${producto.precio}"></span><br>
 <br>
+
+<div class="foto-container">
+    <div th:each="foto : ${producto.fotos}"
+         class="foto"
+         th:style="'background-image: url(/imagesProductos/' + ${foto.nombre} + ');'">
+    </div>
+</div>
+
+<br>
 <div id="Comentarios" style="min-height: 100px;  padding: 5px;">
 <h4>Comentarios</h4>
     <div th:each="comentario: ${comentarios}">
         <p><span th:text="${comentario.texto}"></span>. (<span th:text="${comentario.fecha}"></span>)</p>
-
     </div>
 </div>
 <br>

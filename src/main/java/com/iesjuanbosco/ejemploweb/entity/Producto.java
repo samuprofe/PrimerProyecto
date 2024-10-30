@@ -41,4 +41,8 @@ public class Producto {
     mappedBy = "producto")
     private List<Comentario> comentarios = new ArrayList<Comentario>(); //Obligatorio inicializarlo
 
+    @OneToMany(targetEntity = FotoProducto.class, cascade = CascadeType.ALL,
+    mappedBy = "producto")
+    private List<FotoProducto> fotos = new ArrayList<>();
+
 }

@@ -1,9 +1,7 @@
 package com.iesjuanbosco.ejemploweb.service;
 
-import com.iesjuanbosco.ejemploweb.DTO.CategoriaCosteMedioDTO;
-import com.iesjuanbosco.ejemploweb.entity.Categoria;
-import com.iesjuanbosco.ejemploweb.repository.CategoriaRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.iesjuanbosco.ejemploweb.entity.FotoProducto;
+import com.iesjuanbosco.ejemploweb.entity.Producto;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -12,42 +10,35 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
 @Service
-public class CategoriaService {
-
-    @Autowired
-    private CategoriaRepository categoriaRepository;
-
+public class FotoProductoService {
     private static final List<String> PERMITTED_TYPES = List.of("image/jpeg", "image/png", "image/gif", "image/avif", "image/webp");
     private static final long MAX_FILE_SIZE = 10000000;
-    private static final String UPLOADS_DIRECTORY = "uploads/imagesCategorias";
+    private static final String UPLOADS_DIRECTORY = "uploads/imagesProductos";
 
-    public List<CategoriaCosteMedioDTO> obtenerCategoriasConStats() {
-        return categoriaRepository.obtenerCategoriasConStats();
-    }
 
-    public void eliminarCategoria(Long id) {
-        Categoria categoria = categoriaRepository.findById(id).orElseThrow(()-> new RuntimeException("Categoria no encontrada"));
-        Path ruta= Paths.get(UPLOADS_DIRECTORY + File.separator + categoria.getFoto());
-        categoriaRepository.deleteById(id);
-        try {
-            Files.deleteIfExists(ruta);
-        } catch (IOException e) {
-            throw new RuntimeException("Error al borrar el archivo de la categoría");
+    public List<FotoProducto> guardarFotos(List<MultipartFile> fotos, Producto producto){
+
+        List<FotoProducto> listaFotos = new ArrayList<>();
+
+        for (MultipartFile foto : fotos) {
+            validarArchivo(foto);
+            String nombreFoto = generarNombreUnico(foto);
+            guardarArchivo(foto, nombreFoto);
+
+            FotoProducto fotoProducto = FotoProducto.builder()
+                    .nombre(nombreFoto)
+                    .producto(producto).build();
+
+            listaFotos.add(fotoProducto);
         }
-    }
 
-    public void guardarCategoria(Categoria categoria, MultipartFile file) {
-
-        validarArchivo(file);
-        String nuevoNombreArchivo = generarNombreUnico(file);
-        guardarFoto(file, nuevoNombreArchivo);
-        categoria.setFoto(nuevoNombreArchivo);
-        categoriaRepository.save(categoria);
-
+        producto.setFotos(listaFotos);
+        return listaFotos;
     }
 
     public void validarArchivo(MultipartFile file) {
@@ -73,7 +64,7 @@ public class CategoriaService {
         return nombreUnico + extension;
     }
 
-    public void guardarFoto(MultipartFile file, String nuevoNombreFoto) {
+    public void guardarArchivo(MultipartFile file, String nuevoNombreFoto) {
         Path ruta = Paths.get(UPLOADS_DIRECTORY + File.separator + nuevoNombreFoto);
         //Movemos el archivo a la carpeta y guardamos su nombre en el objeto catgoría
         try {

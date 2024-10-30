@@ -14,7 +14,6 @@ import java.time.LocalDate;
 @Entity
 public class Comentario {
 
-    //id, titulo, texto, fecha y producto relacionado
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

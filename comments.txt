@@ -1,7 +1,5 @@
 
         //Nos queda para este trimestre:
-        //Listado de categorías
-		//Añadir Foto a la categoría y varias fotos a los productos
 		//Ámbito de los objetos. Ambito de sesion mediante HttpSession session o con la anotación @SessionScope @Component y luego inyectándolo.
 		//Pasar mensajes de una página a otra.
 		//Cookies
@@ -13,24 +11,10 @@
 
 
 
-
-        Descargaros el repositorio y observar cambios en el controlador categoriaController. Se ha añadido una clase CategoriaService
-        donde se ha movido toda la lógica de negorio y el acceso a los datos. Es recomendable crear un Servicio para cada Controlador,
-        así la lógica de negocio y el acceso a los repositorios se hace desde el Servicio. El controlador se dedicará únicamente a las
-        peticiones y respuestas HTTP. Hasta ahora no lo habíamos hecho para verlo más sencillo pero se debe hacer siempre. Se añade
-        una nueva capa para el acceso a los datos. Cuesta un poco más de hacer pero es buena práctica y mucho mejor para mantener
-        después la app.
-
-                        MySQL <-- Repository <-- Service <-- Controller
-
-        También se ha añadido lo que nos faltó de validación. Si la imagen no tiene el formato o tamaño correcto
-        se lanza una excepción que se captura desde el controlador y en vez de redirigir volvemos a mostrar el formulario. Además
-        mostramos el mensaje al usuario.
-
-        Hoy, añadir una nueva Entidad llamada Fotos con id (Long) y ruta (String) relacionada con Producto de forma que cada producto
-        pueda tener varias fotos. Añadir al formulario de insertar producto un input de tipo file pero que permita seleccionar
-        varios archivos( multiple ). En la vista de ver el producto se mostrarán todas las fotos. En editar se mostrarán todas junto
-        con un campo file que permita añadir y una cruz al lado de cada foto que permita borrarla.
+        Hoy, mostrar las fotos en la opción editar producto, que se puedan borrar e insertar nuevas mediante un input type="file".
+        Al seleccionar las fotos que se suban y se recargue la página mostrando las nuevas fotos. Al borrar igualmente
+        recargar la página y que ya no aparezca la foto borrada. Borrar también el archivo del disco.
+        Buscar una librería para redimensionar las fotos y al guardarlas redimensionarlas a 1080 de alto y su correspondiente ancho.
 
 
 

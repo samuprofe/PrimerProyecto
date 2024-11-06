@@ -34,7 +34,7 @@ public class Producto {
 
     @ManyToOne(targetEntity = Categoria.class)
     @JoinColumn(name = "id_categoria")
-    @NotNull
+    @NotNull (message ="Debes seleccionar una categoría")
     private Categoria categoria;
 
     @OneToMany(targetEntity = Comentario.class, cascade =CascadeType.ALL,

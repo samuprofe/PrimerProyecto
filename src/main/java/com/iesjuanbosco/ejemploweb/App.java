@@ -25,6 +25,8 @@ public class App {
 		/*Así podemos acceder a un Bean (un respositorio, un controlador, una entidad, etc.) de Spring
 		para, por ejemplo, insertar datos de ejemplo nada más ejecutar la app
 		*/
+
+		/*
 		ProductoRepository productoRepository =  contex.getBean(ProductoRepository.class);
 		CategoriaRepository categoriaRepository = contex.getBean(CategoriaRepository.class);
 
@@ -32,6 +34,7 @@ public class App {
 				.builder()
 				.nombre("Móviles")
 				.descripcion("Los mejores móviles")
+				.productos(new ArrayList<Producto>())	//Al ser una categoría nueva, creamos el arrayList de los productos. Al utilizar el patrón Builder no se inicializa el ArrayList aunque lo hayamos puesto en la clase
 				.build();
 		Producto p1 = Producto.builder()
 				.cantidad(50)
@@ -46,14 +49,13 @@ public class App {
 				.categoria(categoria)
 				.build();
 
-		//Añado los productos a la categoria
-		categoria.setProductos(new ArrayList<Producto>());	//Si utilizamos el patrón de diseño @Builder, no se utilizan las inicializaciones que ponemos en la clase por lo que hay que inicializar el array.
 		categoria.getProductos().add(p1);
 		categoria.getProductos().add(p2);
 
 		//Como la relación tiene CASCADE.ALL se guardan en cascada y guarda los productos de la categoría
-		//categoriaRepository.save(categoria);
+		categoriaRepository.save(categoria);
 
+		 */
 
 
 	}

@@ -1,5 +1,6 @@
 package com.iesjuanbosco.ejemploweb.controller;
 
+import aj.org.objectweb.asm.commons.TryCatchBlockSorter;
 import com.iesjuanbosco.ejemploweb.entity.Categoria;
 import com.iesjuanbosco.ejemploweb.entity.Comentario;
 import com.iesjuanbosco.ejemploweb.entity.FotoProducto;
@@ -80,14 +81,21 @@ public class ProductoController {
 
     @PostMapping("/productos/new")
     public String newProductoInsert(Model model, @Valid Producto producto,
-                                    BindingResult bindingResult, @RequestParam("archivosFotos") List<MultipartFile> fotos) {
+                                    BindingResult bindingResult,
+                                    @RequestParam(value = "archivosFotos", required = false) List<MultipartFile> fotos) {
         if (bindingResult.hasErrors()) {
             model.addAttribute("categorias", productoService.findAllCategoriasSorted());
             return "producto-new";
         }
 
         //Guardar fotos
-        fotoProductoService.guardarFotos(fotos, producto);
+        try {
+            fotoProductoService.guardarFotos(fotos, producto);
+        }catch (IllegalArgumentException ex) {
+            model.addAttribute("categorias", productoService.findAllCategoriasSorted());
+            model.addAttribute("mensaje", ex.getMessage());
+            return "producto-new";
+        }
 
         //Guardar producto
         productoService.saveProducto(producto);

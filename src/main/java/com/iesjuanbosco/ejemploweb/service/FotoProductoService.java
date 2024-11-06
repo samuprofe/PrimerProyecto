@@ -26,15 +26,17 @@ public class FotoProductoService {
         List<FotoProducto> listaFotos = new ArrayList<>();
 
         for (MultipartFile foto : fotos) {
-            validarArchivo(foto);
-            String nombreFoto = generarNombreUnico(foto);
-            guardarArchivo(foto, nombreFoto);
+            if(!foto.isEmpty()) {
+                validarArchivo(foto);
+                String nombreFoto = generarNombreUnico(foto);
+                guardarArchivo(foto, nombreFoto);
 
-            FotoProducto fotoProducto = FotoProducto.builder()
-                    .nombre(nombreFoto)
-                    .producto(producto).build();
+                FotoProducto fotoProducto = FotoProducto.builder()
+                        .nombre(nombreFoto)
+                        .producto(producto).build();
 
-            listaFotos.add(fotoProducto);
+                listaFotos.add(fotoProducto);
+            }
         }
 
         producto.setFotos(listaFotos);

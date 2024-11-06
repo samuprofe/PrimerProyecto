@@ -65,7 +65,6 @@ public class ProductoController {
         Optional<Producto> producto = productoService.findProductoById(id);
         if (producto.isPresent()) {
             model.addAttribute("producto", producto.get());
-            model.addAttribute("comentarios", productoService.findComentariosByProducto(producto.get()));
             model.addAttribute("comentario", new Comentario());
             return "producto-view";
         }

@@ -41,6 +41,8 @@
     <input type="submit" value="insertar">
 </form>
 <script>
+
+
     // Abre el cuadro de selección de archivos del input correspondiente
     function triggerFileInput(caja) {
         caja.querySelector('.file-input').click();
@@ -63,13 +65,15 @@
                     // Si ya existe una imagen, la reutilizamos; si no, creamos una nueva
                     if (!img) {
                         img = document.createElement('img');
-                        fotoProductoInsert.appendChild(img);
+                        input.parentElement.appendChild(img);
                     }
 
                     img.src = e.target.result; // Asigna la imagen como fondo de la caja
                 };
 
                 reader.readAsDataURL(file);
+
+
             } else {    //No ha seleccionado archivo y hay foto la foto
                 let img = input.parentElement.querySelector('img');
 

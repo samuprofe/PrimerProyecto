@@ -14,7 +14,7 @@
         <div th:each="foto : ${producto.fotos}"
              class="foto"
              th:style="'background-image: url(/imagesProductos/' + ${foto.nombre} + ');'">
-            <a th:href="@{productos/delete/{id}(id=${producto.id})}" class="cruz-delete-foto">X</a>
+            <a th:href="@{/productos/{id1}/fotos/{id2}/delete(id1=${producto.id}, id2=${foto.id})}" class="cruz-delete-foto">X</a>
         </div>
         <div class="foto" id="nuevaFoto">
         </div>
@@ -26,6 +26,15 @@
     <input type="file" name="archivoFoto" class="file-input" id="nuevoArchivo">
 </form>
 
+<script type="text/javascript">
+    document.getElementById("nuevaFoto").addEventListener("click", function () {
+        document.getElementById("nuevoArchivo").click();
+    } );
+
+    document.getElementById("nuevoArchivo").addEventListener("change", function () {
+        document.getElementById("formulario-add-foto").submit();
+    })
+</script>
 
 </body>
 </html>

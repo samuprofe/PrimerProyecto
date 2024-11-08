@@ -1,10 +1,7 @@
 package com.iesjuanbosco.ejemploweb.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,6 +14,7 @@ import java.util.List;
 //Anotacion de Spring Data JPA
 @Entity
 @Table(name="categorias")
+@ToString(exclude = "productos")
 public class Categoria {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

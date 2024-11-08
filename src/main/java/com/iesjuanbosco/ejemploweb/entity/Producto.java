@@ -2,10 +2,7 @@ package com.iesjuanbosco.ejemploweb.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +12,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder    //Patron Builder
+@ToString(exclude = "categoria")
 //Anotacion de Spring Data JPA
 @Entity     //Especifica que esta clase es una entidad
 @Table(name="productos")    //Incida que la tabla en la base de datos relacionada con esta entidad

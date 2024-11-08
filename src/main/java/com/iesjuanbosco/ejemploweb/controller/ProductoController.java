@@ -105,6 +105,7 @@ public class ProductoController {
     public String editProducto(@PathVariable Long id, Model model) {
         Optional<Producto> producto = productoService.findProductoById(id);
         if (producto.isPresent()) {
+            model.addAttribute("categorias", productoService.findAllCategoriasSorted());
             model.addAttribute("producto", producto.get());
             return "producto-edit";
         }

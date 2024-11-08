@@ -2,6 +2,9 @@ package com.iesjuanbosco.ejemploweb.service;
 
 import com.iesjuanbosco.ejemploweb.entity.FotoProducto;
 import com.iesjuanbosco.ejemploweb.entity.Producto;
+import com.iesjuanbosco.ejemploweb.repository.FotoProductoRepository;
+import com.iesjuanbosco.ejemploweb.repository.ProductoRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -12,6 +15,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -20,13 +24,17 @@ public class FotoProductoService {
     private static final long MAX_FILE_SIZE = 10000000;
     private static final String UPLOADS_DIRECTORY = "uploads/imagesProductos";
 
+    @Autowired
+    ProductoRepository productoRepository;
+    @Autowired
+    FotoProductoRepository fotoProductoRepository;
 
-    public List<FotoProducto> guardarFotos(List<MultipartFile> fotos, Producto producto){
+    public List<FotoProducto> guardarFotos(List<MultipartFile> fotos, Producto producto) {
 
         List<FotoProducto> listaFotos = new ArrayList<>();
 
         for (MultipartFile foto : fotos) {
-            if(!foto.isEmpty()) {
+            if (!foto.isEmpty()) {
                 validarArchivo(foto);
                 String nombreFoto = generarNombreUnico(foto);
                 guardarArchivo(foto, nombreFoto);
@@ -41,6 +49,22 @@ public class FotoProductoService {
 
         producto.setFotos(listaFotos);
         return listaFotos;
+    }
+
+    public void addFoto(MultipartFile foto, Producto producto) {
+
+        if (!foto.isEmpty()) {
+            validarArchivo(foto);
+            String nombreFoto = generarNombreUnico(foto);
+            guardarArchivo(foto, nombreFoto);
+
+            FotoProducto fotoProducto = FotoProducto.builder()
+                    .nombre(nombreFoto)
+                    .producto(producto).build();
+
+            producto.getFotos().add(fotoProducto);
+            productoRepository.save(producto);
+        }
     }
 
     public void validarArchivo(MultipartFile file) {
@@ -77,4 +101,19 @@ public class FotoProductoService {
             throw new RuntimeException("Error al guardar archivo", e);
         }
     }
+
+    public void deleteFoto(Long idFoto) {
+        Optional<FotoProducto> fotoProductoOptional = fotoProductoRepository.findById(idFoto);
+        if(fotoProductoOptional.isPresent()){
+            FotoProducto fotoProducto = fotoProductoOptional.get();
+            Path archivoFoto = Paths.get(fotoProducto.getNombre());
+            try {
+                Files.deleteIfExists(archivoFoto);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            fotoProductoRepository.deleteById(idFoto);
+        }
+    }
+
 }

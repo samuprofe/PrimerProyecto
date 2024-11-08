@@ -1,11 +1,46 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <title th:text="${titulo}"></title>
-</head>
-<body>
+    <style rel="stylesheet">
+        header{
+            padding: 20px;
+            border-bottom: 1px solid gray;
+            position: relative;
+        }
+        header form, header div{
+            display: block;
+            position: absolute;
+            top: 40px;
+            right: 5px;
 
+        }
+        main{
+            padding: 20px;
+        }
+
+    </style>
+</head>
+
+<body>
+    <header><h2>CATALOGO DE PRODUCTOS</h2>
+       <th:block sec:authorize="isAnonymous()">
+        <form th:action="@{/login}" method="post">
+            <span th:if="${param.errorLogin}">Usuario o contraseña no válidos.</span><br>
+                <input type="text" name="username" placeholder="Username"/>
+                <input type="password" name="password" placeholder="Password"/>
+            <input type="submit" value="Log in" />
+        </form>
+       </th:block>
+        <th:block sec:authorize="isAuthenticated()">
+            <div>Bienvenido <span sec:authentication="name"></span>
+            <a href="#" id="logoutEnlace" onclick="document.getElementById('formLogOut').submit()">Cerrar Sesión</a>
+            <form th:action="@{/logout}" method="post" id="formLogOut"></form> </div>
+        </th:block>
+    </header>
+    <main>
     <select name="categoria" id="categoria" onchange="location.href = '/productos/categoria/'+this.value">
         <option value="-1">Todas las categorias</option>
         <option th:each="categoria : ${categorias}"
@@ -30,6 +65,6 @@
         </ul>
     </div>
     <a th:href="@{/productos/new}">Insertar producto</a>
-
+    </main>
 </body>
 </html>

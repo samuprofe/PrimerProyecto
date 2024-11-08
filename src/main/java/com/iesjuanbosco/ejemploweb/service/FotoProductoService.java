@@ -62,6 +62,7 @@ public class FotoProductoService {
                     .nombre(nombreFoto)
                     .producto(producto).build();
 
+
             producto.getFotos().add(fotoProducto);
             productoRepository.save(producto);
         }

@@ -1,20 +1,24 @@
 package com.iesjuanbosco.ejemploweb.controller;
 
 import aj.org.objectweb.asm.commons.TryCatchBlockSorter;
-import com.iesjuanbosco.ejemploweb.entity.Categoria;
-import com.iesjuanbosco.ejemploweb.entity.Comentario;
-import com.iesjuanbosco.ejemploweb.entity.FotoProducto;
-import com.iesjuanbosco.ejemploweb.entity.Producto;
+import com.iesjuanbosco.ejemploweb.entity.*;
+import com.iesjuanbosco.ejemploweb.repository.UsuarioRepository;
 import com.iesjuanbosco.ejemploweb.service.FotoProductoService;
 import com.iesjuanbosco.ejemploweb.service.ProductoService;
+import com.iesjuanbosco.ejemploweb.service.UsuarioService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -24,11 +28,13 @@ public class ProductoController {
 
     private final ProductoService productoService;
     private final FotoProductoService fotoProductoService;
+    private final UsuarioService usuarioService;
 
     @Autowired
-    public ProductoController(ProductoService productoService, FotoProductoService fotoProductoService) {
+    public ProductoController(ProductoService productoService, FotoProductoService fotoProductoService, UsuarioService usuarioService) {
         this.productoService = productoService;
         this.fotoProductoService = fotoProductoService;
+        this.usuarioService = usuarioService;
     }
 
     @GetMapping("/productos")
@@ -56,19 +62,34 @@ public class ProductoController {
 
     @GetMapping("/productos/del/{id}")
     public String delete(@PathVariable Long id) {
+
         productoService.deleteProductoById(id);
         return "redirect:/productos";
     }
 
     @GetMapping("/productos/view/{id}")
-    public String view(@PathVariable Long id, Model model) {
-        Optional<Producto> producto = productoService.findProductoById(id);
-        if (producto.isPresent()) {
-            model.addAttribute("producto", producto.get());
+    public String view(@PathVariable Long id,
+                       Model model,
+                       Principal principal,
+                       RedirectAttributes redirectAttributes,
+                       @AuthenticationPrincipal UserDetails userDetails //Si habéis extendido UserDetails ya estarán aquí todos los datos
+    ) {
+        try {
+            Producto producto = productoService.findProductoById(id);
+            Usuario usuario = usuarioService.findUsuarioByEmail(principal.getName());
+
+            model.addAttribute("producto", producto);
             model.addAttribute("comentario", new Comentario());
+
+            //Pasamos el usuario para que podamos pintar el icono "borrar" solo en sus comentarios
+            model.addAttribute("usuarioConectado", usuario);
+
             return "producto-view";
+        }catch (IllegalArgumentException ex) {
+            redirectAttributes.addFlashAttribute("errorMessage", ex.getMessage());
+            return "redirect:/productos";
         }
-        return "redirect:/productos";
+
     }
 
     @GetMapping("/productos/new")
@@ -103,13 +124,18 @@ public class ProductoController {
 
     @GetMapping("/productos/edit/{id}")
     public String editProducto(@PathVariable Long id, Model model) {
-        Optional<Producto> producto = productoService.findProductoById(id);
-        if (producto.isPresent()) {
+
+        try {
+            Producto producto = productoService.findProductoById(id);
             model.addAttribute("categorias", productoService.findAllCategoriasSorted());
-            model.addAttribute("producto", producto.get());
+            model.addAttribute("producto", producto);
             return "producto-edit";
         }
-        return "redirect:/productos";
+        catch (IllegalArgumentException ex) {
+            return "redirect:/productos";
+        }
+
+
     }
 
     @PostMapping("/productos/edit/{id}")

@@ -7,6 +7,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.List;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -25,4 +27,7 @@ public class Usuario {
     @Column(length = 500)
     private String password;
     private String rol;
+
+    @OneToMany(targetEntity = Comentario.class, mappedBy = "usuario", cascade = CascadeType.ALL)
+    private List<Comentario> comentarios;
 }

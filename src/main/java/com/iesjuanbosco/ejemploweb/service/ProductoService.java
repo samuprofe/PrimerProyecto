@@ -3,13 +3,16 @@ package com.iesjuanbosco.ejemploweb.service;
 import com.iesjuanbosco.ejemploweb.entity.Categoria;
 import com.iesjuanbosco.ejemploweb.entity.Comentario;
 import com.iesjuanbosco.ejemploweb.entity.Producto;
+import com.iesjuanbosco.ejemploweb.entity.Usuario;
 import com.iesjuanbosco.ejemploweb.repository.CategoriaRepository;
 import com.iesjuanbosco.ejemploweb.repository.ComentarioRepository;
 import com.iesjuanbosco.ejemploweb.repository.ProductoRepository;
+import com.iesjuanbosco.ejemploweb.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,14 +22,17 @@ public class ProductoService {
     private final ProductoRepository productoRepository;
     private final CategoriaRepository categoriaRepository;
     private final ComentarioRepository comentarioRepository;
+    private final UsuarioRepository usuarioRepository;
 
     @Autowired
     public ProductoService(ProductoRepository productoRepository,
                            CategoriaRepository categoriaRepository,
-                           ComentarioRepository comentarioRepository) {
+                           ComentarioRepository comentarioRepository,
+                           UsuarioRepository usuarioRepository) {
         this.productoRepository = productoRepository;
         this.categoriaRepository = categoriaRepository;
         this.comentarioRepository = comentarioRepository;
+        this.usuarioRepository = usuarioRepository;
     }
 
     public List<Producto> findAllProductos() {
@@ -49,8 +55,9 @@ public class ProductoService {
         productoRepository.deleteById(id);
     }
 
-    public Optional<Producto> findProductoById(Long id) {
-        return productoRepository.findById(id);
+    public Producto findProductoById(Long id) {
+
+        return productoRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Producto no encontrado"));
     }
 
     public List<Comentario> findComentariosByProducto(Producto producto) {

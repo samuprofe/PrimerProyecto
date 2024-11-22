@@ -24,5 +24,8 @@ public class Comentario {
     @ManyToOne(targetEntity = Producto.class)
     private Producto producto;
 
+    @ManyToOne(targetEntity = Usuario.class)
+    private Usuario usuario;
+
 
 }

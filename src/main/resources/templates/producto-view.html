@@ -4,9 +4,11 @@
     <meta charset="UTF-8">
     <title></title>
     <link rel="stylesheet" th:href="@{/css/styles.css}" />
+    <script src="https://kit.fontawesome.com/672cc63c77.js" crossorigin="anonymous"></script>
 </head>
 <body>
 
+<div th:if="${errorMessage}" th:text="${errorMessage}" style="color: red; border:1px solid red; margin: auto; width: 80%; padding: 20px; text-align: center"></div>
 
 <h2 th:text="${producto.titulo}"></h2>
 <p>Cantidad: <span th:text="${producto.cantidad}"></span><br>
@@ -24,7 +26,15 @@
 <div id="Comentarios" style="min-height: 100px;  padding: 5px;">
 <h4>Comentarios</h4>
     <div th:each="comentario: ${producto.comentarios}">
-        <p><span th:text="${comentario.texto}"></span>. (<span th:text="${comentario.fecha}"></span>)</p>
+        <p><span th:text="${comentario.texto}"></span>. <span th:text="${comentario.usuario.getEmail()}"></span> (<span th:text="${comentario.fecha}"></span>)
+            <!-- Si el usuario conectado el el propietario pinto la papelera -->
+            <span th:if="${comentario.getUsuario().getEmail == usuarioConectado.getEmail() }">
+                <a th:href="@{/productos/{idProducto}/comentarios/{idComentario}/delete(idProducto=${producto.id}, idComentario=${comentario.id})}">
+                    <i class="fa-solid fa-trash" style="color: gray; text-decoration: none"></i>
+                </a>
+            </span>
+
+        </p>
     </div>
 </div>
 <br>
